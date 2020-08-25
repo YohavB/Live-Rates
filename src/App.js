@@ -10,9 +10,12 @@ class App extends Component {
       data: data,
       isLoaded: false,
       sort: "asc",
+      
     };
     this.sortBy = this.sortBy.bind(this);
   }
+
+  
 
   sortBy(key) {
     console.log(key);
@@ -48,14 +51,16 @@ class App extends Component {
   }
 
   render() {
-    const { isLoaded, data } = this.state;
+    const { isLoaded, data} = this.state;
+   
 
     if (!isLoaded) {
       return <div>Loading...</div>;
     } else {
       return (
         <div className="App">
-          <div>Data has been loaded</div>
+          <div>Data  has been loaded</div>
+        
           <RatesTable data={data} sortBy={this.sortBy} />
         </div>
       );
