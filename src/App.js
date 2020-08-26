@@ -14,7 +14,7 @@ class App extends Component {
   
 //https://www.live-rates.com/rates
   async componentDidMount() {
-    const result = await fetch("https://www.live-rates.com/rates");
+    const result = await fetch("https://www.live-rates.com/rates?key=011a82a9eb");
     this.setState({
       isLoaded: true,
       data: await result.json(),
