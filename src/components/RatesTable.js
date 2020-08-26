@@ -5,15 +5,39 @@ class RatesTable extends Component {
     super(props);
     this.state = {
       search: "",
+      sort: "asc",
     };
+    this.sortBy = this.sortBy.bind(this);
   }
 
   updateSearch(event) {
     this.setState({ search: event.target.value.substr(0, 20) });
   }
 
+  sortBy(key) {
+    console.log(key);
+    this.setState({
+      data: this.props.data.sort((a, b) =>
+        this.state.sort[key] === "asc"
+          ? key === "currency"
+            ? a[key] > b[key]
+              ? 1
+              : -1
+            : a[key] - b[key]
+          : key === "currency"
+          ? b[key] > a[key]
+            ? 1
+            : -1
+          : b[key] - a[key]
+      ),
+      sort: {
+        [key]: this.state.sort[key] === "asc" ? "desc" : "asc",
+      },
+    });
+  }
+
   render() {
-    const { sortBy, data } = this.props;
+    const { data } = this.props;
 
     const { search } = this.state;
 
@@ -34,31 +58,33 @@ class RatesTable extends Component {
           <thead>
             <tr>
               <th>
-                <button onClick={() => sortBy("currency")}>Currency</button>
+                <button onClick={() => this.sortBy("currency")}>
+                  Currency
+                </button>
               </th>
               <th>
-                <button onClick={() => sortBy("rate")}>Rate</button>
+                <button onClick={() => this.sortBy("rate")}>Rate</button>
               </th>
               <th>
-                <button onClick={() => sortBy("bid")}>Bid</button>
+                <button onClick={() => this.sortBy("bid")}>Bid</button>
               </th>
               <th>
-                <button onClick={() => sortBy("ask")}>Ask</button>
+                <button onClick={() => this.sortBy("ask")}>Ask</button>
               </th>
               <th>
-                <button onClick={() => sortBy("high")}>High</button>
+                <button onClick={() => this.sortBy("high")}>High</button>
               </th>
               <th>
-                <button onClick={() => sortBy("low")}>Low</button>
+                <button onClick={() => this.sortBy("low")}>Low</button>
               </th>
               <th>
-                <button onClick={() => sortBy("open")}>Open</button>
+                <button onClick={() => this.sortBy("open")}>Open</button>
               </th>
               <th>
-                <button onClick={() => sortBy("close")}>Close</button>
+                <button onClick={() => this.sortBy("close")}>Close</button>
               </th>
               <th>
-                <button onClick={() => sortBy("timestamp")}>Time</button>
+                <button onClick={() => this.sortBy("timestamp")}>Time</button>
               </th>
             </tr>
           </thead>
