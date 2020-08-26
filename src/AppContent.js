@@ -34,7 +34,7 @@ class AppContent extends Component {
       return (
         <div className="container">
           <div className="title">
-            <h1>Live Rates</h1>Data has been loaded <br /> Last Update at {updateTime}
+            <h1>Live Rates</h1>Data has been loaded <br /> Last Update at {new Date(updateTime).toString()}
           </div>
           <div className="table">
             <RatesTable data={data} />
