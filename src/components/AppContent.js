@@ -1,19 +1,19 @@
 import React, { Component } from "react";
-import RatesTable from "./components/RatesTable";
-//import data from "./data/rates.json";
-import "./AppContent.css";
+import RatesTable from "./RatesTable";
+import { NewLoader } from "./Loader/Loader";
+
+import style from "./AppContent.module.css";
 
 class AppContent extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: "",
+      data: {},
       isLoaded: false,
       updateTime: "",
     };
   }
 
-  //https://www.live-rates.com/rates
   async componentDidMount() {
     const result = await fetch(
       "https://www.live-rates.com/rates?key=011a82a9eb"
@@ -21,7 +21,7 @@ class AppContent extends Component {
     this.setState({
       isLoaded: true,
       data: await result.json(),
-      updateTime : new Date(),
+      updateTime: new Date().toString(),
     });
   }
 
@@ -29,14 +29,16 @@ class AppContent extends Component {
     const { isLoaded, data, updateTime } = this.state;
 
     if (!isLoaded) {
-      return <div>Loading...</div>;
+      return <div>{NewLoader("Rings", "#fff", 300)}</div>;
     } else {
       return (
-        <div className="container">
-          <div className="title">
-            <h1>Live Rates</h1>Data has been loaded <br /> Last Update at {new Date(updateTime).toString()}
+        <div className={style.container}>
+          <div className={style.title}>
+            <h1>Live Rates</h1>
+            <div>Data has been loaded </div>
+            <div>Last Update at {updateTime}</div>
           </div>
-          <div className="table">
+          <div className={style.table}>
             <RatesTable data={data} />
           </div>
         </div>

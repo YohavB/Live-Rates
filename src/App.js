@@ -1,10 +1,6 @@
-import React, { Component } from "react";
-import AppContent from "./AppContent";
+import React from "react";
+import AppContent from "./components/AppContent";
 
-class App extends Component {
-  render() {
-    return <AppContent />;
-  }
+export default function App() {
+  return <AppContent />;
 }
-
-export default App;

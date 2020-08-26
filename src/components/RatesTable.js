@@ -1,5 +1,8 @@
 import React, { Component } from "react";
-import "./RatesTable.css";
+import style from "./RatesTable.module.css";
+
+import up_icon from "../asset/up.svg";
+import down_icon from "../asset/down.svg";
 
 class RatesTable extends Component {
   constructor(props) {
@@ -7,18 +10,21 @@ class RatesTable extends Component {
     this.state = {
       search: "",
       sort: "asc",
+      icon: up_icon,
     };
-    this.sortBy = this.sortBy.bind(this);
   }
 
-  updateSearch(event) {
-    this.setState({ search: event.target.value.substr(0, 20) });
-  }
+  updateSearch = (event) => {
+    this.setState({ search: event.target.value });
+  };
 
-  sortBy(key) {
-    console.log(key);
+  sortBy = (key) => {
+    const { sort, icon } = this.state;
+
+    const { data } = this.props;
+
     this.setState({
-      data: this.props.data.sort((a, b) =>
+      data: data.sort((a, b) =>
         this.state.sort[key] === "asc"
           ? key === "currency"
             ? a[key] > b[key]
@@ -32,27 +38,30 @@ class RatesTable extends Component {
           : b[key] - a[key]
       ),
       sort: {
-        [key]: this.state.sort[key] === "asc" ? "desc" : "asc",
+        [key]: sort[key] === "asc" ? "desc" : "asc",
+      },
+      icon: {
+        [key]: icon[key] === "asc" ? down_icon : up_icon,
       },
     });
-  }
+  };
 
   render() {
     const { data } = this.props;
 
-    const { search } = this.state;
+    const { search, icon } = this.state;
 
     let filterCurrency = data.filter((data) => {
       return data.currency.toLowerCase().indexOf(search.toLowerCase()) !== -1;
     });
 
     return (
-      <div className="container">
-        <div className="filterField">
+      <div className={style.container}>
+        <div className={style.filterField}>
           <input
             type="text"
             value={search}
-            onChange={this.updateSearch.bind(this)}
+            onChange={this.updateSearch}
             placeholder="Search Rate "
           />
         </div>
@@ -60,15 +69,33 @@ class RatesTable extends Component {
         <table>
           <thead>
             <tr>
-              <th onClick={() => this.sortBy("currency")}>Currency</th>
-              <th onClick={() => this.sortBy("rate")}>Rate</th>
-              <th onClick={() => this.sortBy("bid")}>Bid</th>
-              <th onClick={() => this.sortBy("ask")}>Ask</th>
-              <th onClick={() => this.sortBy("high")}>High</th>
-              <th onClick={() => this.sortBy("low")}>Low</th>
-              <th onClick={() => this.sortBy("open")}>Open</th>
-              <th onClick={() => this.sortBy("close")}>Close</th>
-              <th onClick={() => this.sortBy("timestamp")}>Time</th>
+              <th onClick={() => this.sortBy("currency")}>
+                Currency <img alt="" src={icon} />{" "}
+              </th>
+              <th onClick={() => this.sortBy("rate")}>
+                Rate <img alt="" src={icon} />
+              </th>
+              <th onClick={() => this.sortBy("bid")}>
+                Bid <img alt="" src={icon} />
+              </th>
+              <th onClick={() => this.sortBy("ask")}>
+                Ask <img alt="" src={icon} />
+              </th>
+              <th onClick={() => this.sortBy("high")}>
+                High <img alt="" src={icon} />
+              </th>
+              <th onClick={() => this.sortBy("low")}>
+                Low <img alt="" src={icon} />
+              </th>
+              <th onClick={() => this.sortBy("open")}>
+                Open <img alt="" src={icon} />
+              </th>
+              <th onClick={() => this.sortBy("close")}>
+                Close <img alt="" src={icon} />
+              </th>
+              <th onClick={() => this.sortBy("timestamp")}>
+                Time <img alt="" src={icon} />
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -78,11 +105,11 @@ class RatesTable extends Component {
                 <td>{row.rate}</td>
                 <td>{row.bid}</td>
                 <td>{row.ask}</td>
-                <td className="high">{row.high}</td>
-                <td className="low">{row.low}</td>
+                <td className={style.high}>{row.high}</td>
+                <td className={style.low}>{row.low}</td>
                 <td>{row.open}</td>
                 <td>{row.close}</td>
-                <td>{row.timestamp * 1000}</td>
+                <td>{new Date(row.timestamp).toString()}</td>
               </tr>
             ))}
           </tbody>
