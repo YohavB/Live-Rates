@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import RatesTable from "./RatesTable";
 import { NewLoader } from "./Loader/Loader";
 
+import moment from 'moment';
+
 import style from "./AppContent.module.css";
 
 class AppContent extends Component {
@@ -36,7 +38,7 @@ class AppContent extends Component {
           <div className={style.title}>
             <h1>Live Rates</h1>
             <div>Data has been loaded </div>
-            <div>Last Update at {updateTime}</div>
+            <div>Last Update {moment(updateTime).fromNow()}</div>
           </div>
           <div className={style.table}>
             <RatesTable data={data} />
