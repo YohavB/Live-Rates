@@ -31,8 +31,10 @@ class AppContent extends Component {
     } else {
       return (
         <div className="container">
-          <div className="title">Data has been loaded</div>
-          <div className="table"> 
+          <div className="title">
+            <h1>Live Rates</h1>Data has been loaded
+          </div>
+          <div className="table">
             <RatesTable data={data} />
           </div>
         </div>

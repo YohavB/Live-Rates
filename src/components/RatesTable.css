@@ -1,6 +1,6 @@
 table {
   border-collapse: collapse;
- 
+  width: auto;
 }
 
 td,
@@ -8,11 +8,15 @@ th {
   border: 1px solid #ddd;
   padding: 8px;
   text-align: center;
- 
+  min-width: 100px;
+}
+
+td:first-child {
+  min-width: 120px;
 }
 
 tr:nth-child(even) {
-  background-color: #261a5c;
+  background-color: #05064b;
 }
 
 tr:hover {
@@ -28,10 +32,10 @@ th {
   color: white;
 }
 
-tr{
-    color: rgb(76, 197, 245);
+tr {
+  color: rgb(76, 197, 245);
 }
 
 .filterField {
-    margin: 30px;
+  margin: 30px;
 }
