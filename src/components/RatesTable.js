@@ -78,8 +78,8 @@ class RatesTable extends Component {
                 <td>{row.rate}</td>
                 <td>{row.bid}</td>
                 <td>{row.ask}</td>
-                <td>{row.high}</td>
-                <td>{row.low}</td>
+                <td className="high">{row.high}</td>
+                <td className="low">{row.low}</td>
                 <td>{row.open}</td>
                 <td>{row.close}</td>
                 <td>{row.timestamp * 1000}</td>

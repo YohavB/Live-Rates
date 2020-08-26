@@ -39,3 +39,11 @@ tr {
 .filterField {
   margin: 30px;
 }
+
+.high{
+    color: rgb(24, 216, 24);
+}
+
+.low {
+    color: red
+}

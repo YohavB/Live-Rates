@@ -9,6 +9,7 @@ class AppContent extends Component {
     this.state = {
       data: "",
       isLoaded: false,
+      updateTime: "",
     };
   }
 
@@ -20,11 +21,12 @@ class AppContent extends Component {
     this.setState({
       isLoaded: true,
       data: await result.json(),
+      updateTime : new Date(),
     });
   }
 
   render() {
-    const { isLoaded, data } = this.state;
+    const { isLoaded, data, updateTime } = this.state;
 
     if (!isLoaded) {
       return <div>Loading...</div>;
@@ -32,7 +34,7 @@ class AppContent extends Component {
       return (
         <div className="container">
           <div className="title">
-            <h1>Live Rates</h1>Data has been loaded
+            <h1>Live Rates</h1>Data has been loaded <br /> Last Update at {updateTime}
           </div>
           <div className="table">
             <RatesTable data={data} />
