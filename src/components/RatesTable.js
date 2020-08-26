@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import "./RatesTable.css";
 
 class RatesTable extends Component {
   constructor(props) {
@@ -46,46 +47,28 @@ class RatesTable extends Component {
     });
 
     return (
-      <div>
-        <div>
+      <div className="container">
+        <div className="filterField">
           <input
             type="text"
             value={search}
             onChange={this.updateSearch.bind(this)}
+            placeholder="Search Rate "
           />
         </div>
+
         <table>
           <thead>
             <tr>
-              <th>
-                <button onClick={() => this.sortBy("currency")}>
-                  Currency
-                </button>
-              </th>
-              <th>
-                <button onClick={() => this.sortBy("rate")}>Rate</button>
-              </th>
-              <th>
-                <button onClick={() => this.sortBy("bid")}>Bid</button>
-              </th>
-              <th>
-                <button onClick={() => this.sortBy("ask")}>Ask</button>
-              </th>
-              <th>
-                <button onClick={() => this.sortBy("high")}>High</button>
-              </th>
-              <th>
-                <button onClick={() => this.sortBy("low")}>Low</button>
-              </th>
-              <th>
-                <button onClick={() => this.sortBy("open")}>Open</button>
-              </th>
-              <th>
-                <button onClick={() => this.sortBy("close")}>Close</button>
-              </th>
-              <th>
-                <button onClick={() => this.sortBy("timestamp")}>Time</button>
-              </th>
+              <th onClick={() => this.sortBy("currency")}>Currency</th>
+              <th onClick={() => this.sortBy("rate")}>Rate</th>
+              <th onClick={() => this.sortBy("bid")}>Bid</th>
+              <th onClick={() => this.sortBy("ask")}>Ask</th>
+              <th onClick={() => this.sortBy("high")}>High</th>
+              <th onClick={() => this.sortBy("low")}>Low</th>
+              <th onClick={() => this.sortBy("open")}>Open</th>
+              <th onClick={() => this.sortBy("close")}>Close</th>
+              <th onClick={() => this.sortBy("timestamp")}>Time</th>
             </tr>
           </thead>
           <tbody>
@@ -99,7 +82,7 @@ class RatesTable extends Component {
                 <td>{row.low}</td>
                 <td>{row.open}</td>
                 <td>{row.close}</td>
-                <td>{row.timestamp}</td>
+                <td>{row.timestamp * 1000}</td>
               </tr>
             ))}
           </tbody>
