@@ -25,11 +25,25 @@ class AppContent extends Component {
       data: await result.json(),
       updateTime: new Date().toString(),
     });
-    this.intervalID = setInterval(() => this.currentTime(), 1000);
+    this.interval1 = setInterval(() => this.currentTime(), 1000);
+    this.interval2 = setInterval(() => this.fetchData(), 2000);
   }
+
+  async fetchData() {
+    const liveResult = await fetch(
+      "https://www.live-rates.com/rates?key=011a82a9eb"
+      );
+    this.setState({
+      data: await liveResult.json(),
+      updateTime: new Date().toString(),
+    });
+  }
+
   componentWillUnmount() {
-    clearInterval(this.intervalID);
+    clearInterval(this.interval1);
+    clearInterval(this.interval2);
   }
+
   currentTime() {
     this.setState({
       time: new Date().toLocaleString(),
