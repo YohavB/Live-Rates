@@ -10,14 +10,12 @@ import style from "./AppContent.module.css";
 
 class AppContent extends Component {
   state = {
-    data: {},
+    data: [],
     isLoaded: false,
     updateTime: null,
     time: new Date().toLocaleString(),
-   
   };
 
-  
   async componentDidMount() {
     const result = await fetch(
       "https://www.live-rates.com/rates?key=011a82a9eb"
@@ -28,7 +26,6 @@ class AppContent extends Component {
       updateTime: new Date().toString(),
     });
     this.intervalID = setInterval(() => this.currentTime(), 1000);
-    
   }
   componentWillUnmount() {
     clearInterval(this.intervalID);
@@ -40,7 +37,7 @@ class AppContent extends Component {
   }
 
   render() {
-    const { isLoaded, data, updateTime, time,  } = this.state;
+    const { isLoaded, data, updateTime, time } = this.state;
 
     if (!isLoaded) {
       return (
@@ -55,13 +52,12 @@ class AppContent extends Component {
             <h1>Live Rates</h1>
             <div>Last Update {moment(updateTime).fromNow()}</div>{" "}
             <div>{time}</div>
-            
           </div>
           <div className={style.table}>
             <RatesTable data={data} />
             <a href="#">
-            <img className={style.scroll} src={scroll} alt="up" href="#" ></img></a>
-
+              <img className={style.scroll} src={scroll} alt="up" />
+            </a>
           </div>
         </div>
       );
