@@ -1,23 +1,26 @@
 import React from "react";
-import Loader from "react-loader-spinner";
+import ReactLoader from "react-loader-spinner";
 import style from "./Loaders.module.css";
 
-export const NewLoader = (type, color, mensuration) => {
+export const Loader = (props) => {
+
+  const {type, color, mensuration} = props
+
   return (
     <div className={style.background}>
       <div>
-        <Loader type={type} visible color={color} height width={mensuration} />
+        <ReactLoader type={type} visible color={color} height width={mensuration} />
       </div>
     </div>
   );
 };
 
-export default NewLoader;
+export default Loader;
 
 /*
 TYPE OF SPINNER
 Audio	
-Ball-Triangle	<Loade
+Ball-Triangle	
 Bars	
 Circles	
 Grid

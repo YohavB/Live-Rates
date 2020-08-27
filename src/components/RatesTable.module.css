@@ -8,6 +8,7 @@
 table {
   border-collapse: collapse;
   width: auto;
+  margin-bottom: 10px;
 }
 
 td,
@@ -16,6 +17,7 @@ th {
   padding: 8px;
   text-align: center;
   min-width: 100px;
+  position: relative;
 }
 
 td:first-child {
@@ -32,8 +34,7 @@ tr:hover {
 }
 
 th {
-  padding-top: 12px;
-  padding-bottom: 12px;
+  height: 40px;
   text-align: left;
   background-color: #05064b;
   color: white;
@@ -48,11 +49,19 @@ tr {
   margin: 30px;
 }
 
-.high{
-    color: rgb(24, 216, 24);
+.high {
+  color: rgb(24, 216, 24);
 }
 
 .low {
-    color: red
+  color: red;
+}
+
+.icon {
+  height: 30px;
+  position: absolute;
+  right: 15px;
+  bottom: 15px;
+  
 }
 

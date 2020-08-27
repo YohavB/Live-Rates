@@ -1,20 +1,19 @@
 import React, { Component } from "react";
 import style from "./RatesTable.module.css";
 
-import moment from 'moment';
+import moment from "moment";
 
-import up_icon from "../asset/up.svg";
 import down_icon from "../asset/down.svg";
 
 class RatesTable extends Component {
   state = {
     search: "",
     sort: "asc",
-    icon: "",
   };
 
   updateSearch = (event) => {
     this.setState({ search: event.target.value });
+    console.log( this.state.search)
   };
 
   sortBy = (key) => {
@@ -23,35 +22,41 @@ class RatesTable extends Component {
     const { data } = this.props;
 
     this.setState({
-      data: data.sort((a, b) =>
-        sort[key] === "asc"
-          ? key === "currency"
-            ? a[key] > b[key]
-              ? 1
-              : -1
-            : a[key] - b[key]
-          : key === "currency"
-          ? b[key] > a[key]
-            ? 1
-            : -1
-          : b[key] - a[key]
-      ),
+      data: data.sort((a, b) => {
+        if (sort[key] === "asc") {
+          if (key === "currency") {
+            return a[key] > b[key] ? 1 : -1;
+          } else {
+            return a[key] - b[key];
+          }
+        } else {
+          if (key === "currency") {
+            return b[key] > a[key] ? 1 : -1;
+          } else {
+            return b[key] - a[key];
+          }
+        }
+      }),
+
       sort: {
         [key]: sort[key] === "asc" ? "desc" : "asc",
-      },
-      icon: {
-        [key]: sort[key] === "asc" ? up_icon : down_icon,
-      },
+      }
     });
+  };
+
+  getFormatedTime = (timestamp) => {
+    return moment(+timestamp).format(" HH:mm:ss ");
   };
 
   render() {
     const { data } = this.props;
 
-    const { search, icon } = this.state;
+    const { search } = this.state;
 
-    let filterCurrency = data.filter((data) => {
-      return data.currency.toLowerCase().indexOf(search.toLowerCase()) !== -1;
+    const filterCurrency = data.filter((data) => {
+      return (
+        data.currency.toLowerCase().indexOf(search.toLowerCase()) !== -1 
+      );
     });
 
     if (!data) {
@@ -65,6 +70,7 @@ class RatesTable extends Component {
               value={search}
               onChange={this.updateSearch}
               placeholder="Search Rate "
+              
             />
           </div>
 
@@ -72,31 +78,32 @@ class RatesTable extends Component {
             <thead>
               <tr>
                 <th onClick={() => this.sortBy("currency")}>
-                  Currency <img alt="" src={icon} />{" "}
+                  Currency <img className={style.icon} alt="" src={down_icon} />{" "}
                 </th>
                 <th onClick={() => this.sortBy("rate")}>
-                  Rate <img alt="" src={icon} />
+                  Rate <img className={style.icon} alt="" src={down_icon} />
                 </th>
                 <th onClick={() => this.sortBy("bid")}>
-                  Bid <img alt="" src={icon} />
+                  Bid <img className={style.icon} alt="" src={down_icon} />
                 </th>
                 <th onClick={() => this.sortBy("ask")}>
-                  Ask <img alt="" src={icon} />
+                  Ask <img className={style.icon} alt="" src={down_icon} />
                 </th>
                 <th onClick={() => this.sortBy("high")}>
-                  High <img alt="" src={icon} />
+                  High <img className={style.icon} alt="" src={down_icon} />
                 </th>
                 <th onClick={() => this.sortBy("low")}>
-                  Low <img alt="" src={icon} />
+                  Low <img className={style.icon} alt="" src={down_icon} />
                 </th>
                 <th onClick={() => this.sortBy("open")}>
-                  Open <img alt="" src={icon} />
+                  Open <img className={style.icon} alt="" src={down_icon} />
                 </th>
                 <th onClick={() => this.sortBy("close")}>
-                  Close <img alt="" src={icon} />
+                  Close <img className={style.icon} alt="" src={down_icon} />
                 </th>
                 <th onClick={() => this.sortBy("timestamp")}>
-                  Time <img alt="" src={icon} />
+                  Update at{" "}
+                  <img className={style.icon} alt="" src={down_icon} />
                 </th>
               </tr>
             </thead>
@@ -111,7 +118,7 @@ class RatesTable extends Component {
                   <td className={style.low}>{row.low}</td>
                   <td>{row.open}</td>
                   <td>{row.close}</td>
-                  <td>{row.timestamp}</td>
+                  <td>{this.getFormatedTime(row.timestamp)}</td>
                 </tr>
               ))}
             </tbody>
