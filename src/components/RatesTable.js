@@ -8,40 +8,10 @@ import down_icon from "../asset/down.svg";
 class RatesTable extends Component {
   state = {
     search: "",
-    sort: "asc",
   };
 
   updateSearch = (event) => {
     this.setState({ search: event.target.value });
-    console.log( this.state.search)
-  };
-
-  sortBy = (key) => {
-    const { sort } = this.state;
-
-    const { data } = this.props;
-
-    this.setState({
-      data: data.sort((a, b) => {
-        if (sort[key] === "asc") {
-          if (key === "currency") {
-            return a[key] > b[key] ? 1 : -1;
-          } else {
-            return a[key] - b[key];
-          }
-        } else {
-          if (key === "currency") {
-            return b[key] > a[key] ? 1 : -1;
-          } else {
-            return b[key] - a[key];
-          }
-        }
-      }),
-
-      sort: {
-        [key]: sort[key] === "asc" ? "desc" : "asc",
-      }
-    });
   };
 
   getFormatedTime = (timestamp) => {
@@ -49,19 +19,15 @@ class RatesTable extends Component {
   };
 
   render() {
-    const { data } = this.props;
-
+    const { data, setKey } = this.props;
     const { search } = this.state;
 
-    const filterCurrency = data.filter((data) => {
-      return (
-        data.currency.toLowerCase().indexOf(search.toLowerCase()) !== -1 
-      );
-    });
+	  if (!data) {
+		  return <div>Waiting for Data ... </div>; 
+	  }
 
-    if (!data) {
-      return <div>Waiting for Data ... </div>;
-    } else {
+	  const filterCurrency = data.filter((data) => data.currency.toLowerCase().indexOf(search.toLowerCase()) !== -1);
+
       return (
         <div className={style.container}>
           <div className={style.filterField}>
@@ -70,38 +36,37 @@ class RatesTable extends Component {
               value={search}
               onChange={this.updateSearch}
               placeholder="Search Rate "
-              
             />
           </div>
 
           <table>
             <thead>
               <tr>
-                <th onClick={() => this.sortBy("currency")}>
+                <th onClick={() => setKey("currency")}>
                   Currency <img className={style.icon} alt="" src={down_icon} />{" "}
                 </th>
-                <th onClick={() => this.sortBy("rate")}>
+                <th onClick={() => setKey("rate")}>
                   Rate <img className={style.icon} alt="" src={down_icon} />
                 </th>
-                <th onClick={() => this.sortBy("bid")}>
+                <th onClick={() => setKey("bid")}>
                   Bid <img className={style.icon} alt="" src={down_icon} />
                 </th>
-                <th onClick={() => this.sortBy("ask")}>
+                <th onClick={() => setKey("ask")}>
                   Ask <img className={style.icon} alt="" src={down_icon} />
                 </th>
-                <th onClick={() => this.sortBy("high")}>
+                <th onClick={() => setKey("high")}>
                   High <img className={style.icon} alt="" src={down_icon} />
                 </th>
-                <th onClick={() => this.sortBy("low")}>
+                <th onClick={() => setKey("low")}>
                   Low <img className={style.icon} alt="" src={down_icon} />
                 </th>
-                <th onClick={() => this.sortBy("open")}>
+                <th onClick={() => setKey("open")}>
                   Open <img className={style.icon} alt="" src={down_icon} />
                 </th>
-                <th onClick={() => this.sortBy("close")}>
+                <th onClick={() => setKey("close")}>
                   Close <img className={style.icon} alt="" src={down_icon} />
                 </th>
-                <th onClick={() => this.sortBy("timestamp")}>
+                <th onClick={() => setKey("timestamp")}>
                   Update at{" "}
                   <img className={style.icon} alt="" src={down_icon} />
                 </th>
@@ -109,7 +74,7 @@ class RatesTable extends Component {
             </thead>
             <tbody>
               {filterCurrency.map((row) => (
-                <tr>
+                <tr key={row.currency}>
                   <td>{row.currency}</td>
                   <td>{row.rate}</td>
                   <td>{row.bid}</td>
@@ -125,7 +90,6 @@ class RatesTable extends Component {
           </table>
         </div>
       );
-    }
   }
 }
 export default RatesTable;
